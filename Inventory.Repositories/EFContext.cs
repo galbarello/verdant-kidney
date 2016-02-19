@@ -1,4 +1,5 @@
 ﻿using Inventory.BusinessEntity;
+using Inventory.Repositories.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -20,9 +21,17 @@ namespace Inventory.Repositories
 
         #region Constructor
 
-        public EFContext()
+        static EFContext()
         {
-            
+            Database.SetInitializer<EFContext>(null);
+        }
+
+
+        public EFContext()
+            : base("InventoryDb")
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         #endregion
@@ -31,9 +40,7 @@ namespace Inventory.Repositories
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            modelBuilder.Conventions.Remove<StoreGeneratedIdentityKeyConvention>();
+            modelBuilder.Configurations.Add(new ProductMapper());
         }
 
         #endregion

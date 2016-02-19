@@ -9,6 +9,7 @@ namespace Inventory.Repositories
 {
     public class ProductRepository : IProductRepository
     {
+
         #region Methods
 
         /// <summary>
@@ -29,11 +30,53 @@ namespace Inventory.Repositories
         /// Persist a product
         /// </summary>
         /// <param name="product"></param>
-        public void Save(ProductEntity product)
+        public void Create(ProductEntity product)
         {
             using (EFContext context = new EFContext())
             {
                 context.Products.Add(product);
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Update stock from a product
+        /// </summary>
+        /// <param name="cmdStock"></param>
+        public void AddStock(CommandStockInput cmdStock)
+        {
+            using (EFContext context = new EFContext())
+            {
+                ProductEntity product = context.Products.FirstOrDefault(p => p.Id == cmdStock.Id);
+                product.Quantity += cmdStock.Quantity;
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Update stock from a product
+        /// </summary>
+        /// <param name="cmdStock"></param>
+        public void RemoveStock(CommandStockInput cmdStock)
+        {
+            using (EFContext context = new EFContext())
+            {
+                ProductEntity product = context.Products.FirstOrDefault(p => p.Id == cmdStock.Id);
+                product.Quantity -= cmdStock.Quantity;
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Archive a product
+        /// </summary>
+        /// <param name="id"></param>
+        public void Archive(Int32 id)
+        {
+            using (EFContext context = new EFContext())
+            {
+                ProductEntity product = context.Products.FirstOrDefault(p => p.Id == id);
+                product.IsActive = false;
                 context.SaveChanges();
             }
         }

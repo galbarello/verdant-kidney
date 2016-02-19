@@ -1,6 +1,10 @@
 ﻿using Inventory.Handlers;
+using Inventory.Logic;
+using Inventory.Logic.Abstractions;
 using Inventory.Messaging;
 using Inventory.Repositories;
+using Inventory.Services;
+using Inventory.Services.Abstractions;
 using Inventory.Web.Services;
 using Nancy;
 
@@ -12,7 +16,10 @@ namespace Inventory.Web
         {
             Wiring.Wire();
             base.ApplicationStartup(container, pipelines);
+            
             container.Register<IProductRepository, ProductRepository>().AsSingleton();
+            container.Register<IProductService, ProductService>().AsSingleton();
+            container.Register<IProductLogic, ProductLogic>().AsSingleton();
         }
     }
 
