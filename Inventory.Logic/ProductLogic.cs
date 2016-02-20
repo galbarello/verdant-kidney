@@ -43,7 +43,9 @@ namespace Inventory.Logic
         /// <param name="cmdStock"></param>
         public void AddStock(CommandStockInput cmdStock)
         {
-            this._productRepository.AddStock(cmdStock);
+            ProductEntity product = this._productRepository.Get(cmdStock.Id);
+            product.Quantity += cmdStock.Quantity;
+            this._productRepository.Update(product);
         }
 
         /// <summary>
@@ -52,7 +54,9 @@ namespace Inventory.Logic
         /// <param name="cmdStock"></param>
         public void RemoveStock(CommandStockInput cmdStock)
         {
-            this._productRepository.RemoveStock(cmdStock);
+            ProductEntity product = this._productRepository.Get(cmdStock.Id);
+            product.Quantity -= cmdStock.Quantity;
+            this._productRepository.Update(product);
         }
 
         /// <summary>
@@ -61,10 +65,11 @@ namespace Inventory.Logic
         /// <param name="id"></param>
         public void Archive(Int32 id)
         {
-            this._productRepository.Archive(id);
+            ProductEntity product = this._productRepository.Get(id);
+            product.IsActive = false;
+            this._productRepository.Update(product);
         }
 
         #endregion
-       
     }
 }

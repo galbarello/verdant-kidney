@@ -11,7 +11,6 @@ namespace Inventory.Web.Modules
 {
     public class InventoryModule : NancyModule
     {
-
         #region Constans
 
         private const String errorMessage = "Something bad happened";
@@ -84,11 +83,11 @@ namespace Inventory.Web.Modules
                     this._productService = productService;
                     this._productService.AddStock(cmdStock);
 
-                    response = Response.AsJson<object>(HttpStatusCode.OK);
+                    response = Response.AsJson<Object>(HttpStatusCode.OK);
                 }
                 catch
                 {
-                    response = Response.AsJson<string>(errorMessage, HttpStatusCode.InternalServerError);
+                    response = Response.AsJson<String>(errorMessage, HttpStatusCode.InternalServerError);
                 }
 
                 return response;

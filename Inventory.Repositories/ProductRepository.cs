@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.ProviderBase;
+using System.Data.Entity;
 
 namespace Inventory.Repositories
 {
@@ -40,29 +42,15 @@ namespace Inventory.Repositories
         }
 
         /// <summary>
-        /// Update stock from a product
+        /// Update stock and state from a product
         /// </summary>
-        /// <param name="cmdStock"></param>
-        public void AddStock(CommandStockInput cmdStock)
+        /// <param name="product"></param>
+        public void Update(ProductEntity product)
         {
             using (EFContext context = new EFContext())
             {
-                ProductEntity product = context.Products.FirstOrDefault(p => p.Id == cmdStock.Id);
-                product.Quantity += cmdStock.Quantity;
-                context.SaveChanges();
-            }
-        }
-
-        /// <summary>
-        /// Update stock from a product
-        /// </summary>
-        /// <param name="cmdStock"></param>
-        public void RemoveStock(CommandStockInput cmdStock)
-        {
-            using (EFContext context = new EFContext())
-            {
-                ProductEntity product = context.Products.FirstOrDefault(p => p.Id == cmdStock.Id);
-                product.Quantity -= cmdStock.Quantity;
+                context.Products.Attach(product);
+                context.Entry(product).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }
@@ -82,5 +70,7 @@ namespace Inventory.Repositories
         }
 
         #endregion
+
+
     }
 }
