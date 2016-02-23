@@ -40,6 +40,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Nancy, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nancy.1.4.1\lib\net40\Nancy.dll</HintPath>
@@ -50,11 +57,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Views\Inventory\Inventory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -69,11 +78,36 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Modules\HomeModule.cs" />
+    <Compile Include="Modules\InventoryModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\RestStore.cs" />
     <Compile Include="Services\ServiceLocator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Inventory.BusinessEntity\Inventory.BusinessEntity.csproj">
+      <Project>{35362c67-6e1c-4f74-b245-96599f25eaa3}</Project>
+      <Name>Inventory.BusinessEntity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inventory.Logic.Abstractions\Inventory.Logic.Abstractions.csproj">
+      <Project>{a22df2b6-bf5e-428f-a28d-b3e135d71aa4}</Project>
+      <Name>Inventory.Logic.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inventory.Logic\Inventory.Logic.csproj">
+      <Project>{09c45ef0-f436-4dc5-a69b-eefe42d018bc}</Project>
+      <Name>Inventory.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inventory.Repositories\Inventory.Repositories.csproj">
+      <Project>{7815dccb-e6f9-42c8-b5d7-d9f7123791a8}</Project>
+      <Name>Inventory.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inventory.Services.Abstractions\Inventory.Services.Abstractions.csproj">
+      <Project>{4a0dd8cf-4ef5-40e5-aa86-f76713c9a47b}</Project>
+      <Name>Inventory.Services.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inventory.Services\Inventory.Services.csproj">
+      <Project>{8f2815ab-429e-4e49-a7e9-eebd796a7e6f}</Project>
+      <Name>Inventory.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Inventory\Inventory.csproj">
       <Project>{89b6fda7-1c13-4808-aa21-a191d0e3fe34}</Project>
       <Name>Inventory</Name>
